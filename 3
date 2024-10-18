@@ -1,0 +1,6 @@
+select e."EventName", m."MarathonName",
+TO_CHAR(("RaceTime" || ' second')::interval, 'fmHH24hfmMIm') as "Time"
+ROW_NUMBER() OVER(PARTITION BY e."EventName" ORDER BY rei."RaceTime" ASC) AS pposition
+from "Event" e 
+inner join "Marathon" m on e."MarathonId" = m."MarathonId"
+inner join "RegistrationEvent" rei on e."EventId" = rei."EventId";
