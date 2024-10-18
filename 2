@@ -1,0 +1,6 @@
+select g."Gender", age(r."DateOfBirth") as age, ev."EventName"
+from "Runner" r
+inner join "Registration" reg on r."RunnerId" = reg."RunnerId"
+inner join "RegistrationEvent" rei on reg."RegistrationId" = rei."RegistrationId"
+inner join "Event" ev on rei."EventId" = ev."EventId"
+inner join "Gender" g on r."GenderId"::int = g."GenderId";
