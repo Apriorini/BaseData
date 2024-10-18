@@ -1,0 +1,22 @@
+5.1
+select ("FirstName"|| ' ' ||"LastName") as "RunnerName", u."Email", "RegistrationStatus", "MarathonName", "EventTypeName" from "Runner" r
+inner join "User" u on u."Email" = r."Email" 
+inner join "Marathon" m on m."CountryCode" = r."CountryCode" 
+inner join "Event" e on e."MarathonId" = m."MarathonId"
+inner join "Registration" r2 on r2."RunnerId" = r."RunnerId" 
+inner join "RegistrationEvent" re on re."RegistrationId" = r2."RegistrationId" 
+inner join "EventType" et on et."EventTypeId" = e."EventTypeId" 
+inner join "RegistrationStatus" rs on r2."RegistrationStatusId" = rs."RegistrationStatusId"
+where "RaceTime" is not null and "RaceTime" != 0 and m."YearHeld" = 2015;
+
+5.2
+select count("RaceTime") as "AmountOfRunners"
+from "Runner" r 
+inner join "User" u on u."Email" = r."Email" 
+inner join "Marathon" m on m."CountryCode" = r."CountryCode" 
+inner join "Event" e on e."MarathonId" = m."MarathonId"
+inner join "Registration" r2 on r2."RunnerId" = r."RunnerId" 
+inner join "RegistrationEvent" re on re."RegistrationId" = r2."RegistrationId" 
+inner join "EventType" et on et."EventTypeId" = e."EventTypeId" 
+inner join "RegistrationStatus" rs on r2."RegistrationStatusId" = rs."RegistrationStatusId" 
+where "RaceTime" is not null and "RaceTime" != 0 and m."YearHeld" = 2015;
