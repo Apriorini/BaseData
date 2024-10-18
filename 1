@@ -1,0 +1,7 @@
+select ("FirstName"|| ' ' ||"LastName") as "RunnerName", r."CountryCode"  from "Runner" r 
+inner join "Country" c on r."CountryCode"=c."CountryCode" 
+inner join "User" u on r."Email"=u."Email"
+inner join "Registration" r2 on r2."RunnerId" = r."RunnerId" 
+inner join "RegistrationEvent" re on re."RegistrationEventId" = r2."RegistrationId" 
+inner join "Event" e on e."EventId" = re."EventId" 
+inner join "Marathon" m on m."MarathonId" = e."MarathonId";
