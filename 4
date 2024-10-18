@@ -1,0 +1,27 @@
+4.1
+select ("FirstName"|| ' ' ||"LastName") as "RunnerName", 
+"CountryName",
+date_part('year', age(current_date, "DateOfBirth")) as "Age",
+"Gender", "YearHeld",
+row_number() over (partition by e."EventId"order by "RaceTime") AS "Position",
+row_number() over (partition by e."EventId", g."Gender" order by "RaceTime") AS "PositionGender",
+"RaceTime", 
+(("RaceTime" / 60 / 60)::text || 'h ' || (("RaceTime" / 60 % 60)::text || 'min ' ||  ("RaceTime" % 60)::text || 'sec')) as "RaceTime",
+"EventTypeName", "MarathonName"
+from "Registration" r 
+inner join "RegistrationEvent" re on re."RegistrationId" = r."RegistrationId"
+inner join "Event" e on e."EventId" = re."EventId"
+inner join "Runner" ru on ru."RunnerId" = r."RunnerId"
+inner join "User" u on u."Email" = ru."Email"
+inner join "Country" c on c."CountryCode" = ru."CountryCode"
+inner join "Marathon" m on m."CountryCode" = c."CountryCode"
+inner join "EventType" et on et."EventTypeId" = e."EventTypeId"
+inner join "Gender" g on g."Gender" = ru."GenderId"
+where "RaceTime" is not null and "RaceTime"!=0;
+
+4.2
+select count(re."RaceTime") as "EndRace",
+TO_CHAR(AVG(("RaceTime" || ' second')::interval), 'fmHH24:MI') AS "AverageTime"
+from "Event" e 
+inner join "RegistrationEvent" re on e."EventId" = re."EventId"
+WHERE "RaceTime" IS NOT null;
