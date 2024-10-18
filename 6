@@ -1,0 +1,10 @@
+6.1
+select "CharityName", sum("SponsorshipTarget"), count("SponsorName") from "Registration" r 
+inner join "Charity" c on c."CharityId" = r."CharityId" 
+inner join "Sponsorship" s on s."RegistrationId" = r."RegistrationId";
+
+6.2
+select count(distinct "CharityName") as "CountCharity", count("SponsorName") as "CountSponsors", sum("SponsorshipTarget") as "TotalCost"
+from "Registration" r 
+inner join "Sponsorship" s on s."RegistrationId" = r."RegistrationId"
+inner join "Charity" c on c."CharityId" = r."CharityId";
